@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const registerUser = asyncHandler(async (req,res)=>{
   const {fullname,email,username,password} = req.body;
-  console.log("email",email,password);
+  console.log(req.body);
 
   if ([fullname,email,username,password].some((field)=>field?.trim() === "")) {
     throw new ApiError(400,"all field are requred")
@@ -20,8 +20,15 @@ const registerUser = asyncHandler(async (req,res)=>{
     throw new ApiError(409,"username and email is alredy existed")
   }
 
+  console.log("fliles",req.files);
+  
+
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  let coverImageLocalPath
+  if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+    coverImageLocalPath = req.files?.coverImage[0]?.path;
+  }
   
 
   if (!avatarLocalPath) {
@@ -41,7 +48,7 @@ const user = await User.create({
   coverImage: coverImage?.url || "",
   email,
   password,
-  username: username.ToLowerCase()
+  username: username.toLowerCase()
 })
  
 const createdUser = await User.findById(user._id).select("-password -refreshToken")
