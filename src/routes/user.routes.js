@@ -26,7 +26,7 @@ router.route("/refresh-token").post(refreshAccessToken)
 
 router.route("/change-password").post(verifyjwt , changeCurrentPassword)
 
-router.route("/current-user").get(verifyjwt, getCourrentUser)
+router.route("/get-current-user").get(verifyjwt, getCourrentUser)
 
 router.route("/update-account").patch(verifyjwt,updateAccountDetails)
 
