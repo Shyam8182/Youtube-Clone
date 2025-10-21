@@ -17,10 +17,11 @@ app.use(cookieParser())
 
 // routes imports
 
-import userRouter from './routes/user.routes.js'
+import userRouter from './routes/user.routes.js';
+import videoRouter from './routes/video.routes.js';
 
 app.use("/user",userRouter)
-
+app.use("/video",videoRouter)
 
 
 export {app};
